@@ -7,12 +7,9 @@ import {
 } from "../_constants/constants";
 import { Category, TicketStatus } from "../TicketPage/types";
 import { useRouter } from "next/navigation";
+import { ITicket } from "../types/types";
 
-interface InitialState {
-  title: string;
-  description: string;
-  priority: number;
-  progress: number;
+interface InitialState extends Omit<ITicket, "_id" | "status" | "category"> {
   status: TicketStatus | "";
   category: Category | "";
 }
@@ -46,7 +43,7 @@ const TicketForm = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("/Tickets", {
+      const res = await fetch("/api/Tickets", {
         method: "POST",
         body: JSON.stringify({ formData }),
         headers: {

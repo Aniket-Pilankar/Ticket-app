@@ -1,13 +1,19 @@
 import React from "react";
+import { TicketStatus } from "../TicketPage/types";
+import { getColor } from "../TicketPage/helper";
 
-type Props = {};
+type Props = {
+  status: TicketStatus;
+};
 
-const StatusDisplay = (props: Props) => {
+const StatusDisplay = ({ status }: Props) => {
+  const color = getColor(status);
+  console.log("color:", color);
   return (
     <span
-      className={`inline-block  rounded-full px-2 py-1 text-xs font-semibold text-gray-700`}
+      className={`inline-block  rounded-full px-2 py-1 text-xs font-semibold ${color} text-gray-700`}
     >
-      Done
+      {status.toUpperCase()}
     </span>
   );
 };

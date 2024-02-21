@@ -1,13 +1,15 @@
 import React from "react";
 
-type Props = {};
+type Props = {
+  progress: number;
+};
 
-const ProgressDisplay = (props: Props) => {
+const ProgressDisplay = ({ progress }: Props) => {
   return (
     <div className="bg-gray-200 w-full rounded-full h-3">
       <div
         className="bg-blue-600 rounded-full h-3"
-        style={{ width: "75%" }}
+        style={{ width: `${progress}%` }}
       ></div>
     </div>
   );
