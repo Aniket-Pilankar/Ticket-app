@@ -74,8 +74,8 @@ const TicketForm = ({ isEditing, ticket }: Props) => {
           throw new Error("Failed to create ticket");
         }
       }
-      router.refresh();
       router.push("/");
+      router.refresh();
     } catch (e) {
       console.error("e:", e);
     }
@@ -84,7 +84,7 @@ const TicketForm = ({ isEditing, ticket }: Props) => {
   useEffect(
     function initPage() {
       console.log("isEditing:", isEditing);
-      console.log("ticket:", ticket);
+      // console.log("ticket:", ticket);
       if (!isEditing) return;
       if (!ticket) return;
       setFormData({
