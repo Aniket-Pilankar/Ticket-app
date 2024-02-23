@@ -216,7 +216,11 @@ const TicketForm = ({ isEditing, ticket }: Props) => {
             </option>
           ))}
         </select>
-        <input type="submit" className="btn" value={"Create Ticket"} />
+        <input
+          type="submit"
+          className="btn"
+          value={isEditing ? "Update Ticket" : "Create Ticket"}
+        />
       </form>
     </div>
   );

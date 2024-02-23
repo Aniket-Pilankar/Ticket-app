@@ -1,5 +1,5 @@
 import TicketForm from "@/app/components/TicketForm";
-import React from "react";
+import React, { Suspense } from "react";
 import { getTicketById } from "./helper";
 
 type Props = {
@@ -11,9 +11,15 @@ type Props = {
 const TicketFormComp = async ({ params: { id } }: Props) => {
   const isEditing = id === "new" ? false : true;
   const ticket = await getTicketById(id);
-  // console.log("ticket:", ticket);
 
-  return <TicketForm isEditing={isEditing} ticket={ticket} />;
+  return (
+    <>
+      <h1 className="text-center">
+        {isEditing ? "Update Ticket" : "Create Ticket"}
+      </h1>
+      <TicketForm isEditing={isEditing} ticket={ticket} />;
+    </>
+  );
 };
 
 export default TicketFormComp;
