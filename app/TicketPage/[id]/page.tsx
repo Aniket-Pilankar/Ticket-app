@@ -1,5 +1,6 @@
 import TicketForm from "@/app/components/TicketForm";
 import React from "react";
+import { getTicketById } from "./helper";
 
 type Props = {
   params: {
@@ -7,9 +8,12 @@ type Props = {
   };
 };
 
-const TicketFormComp = ({ params: { id } }: Props) => {
-  console.log("id:", id);
-  return <TicketForm />;
+const TicketFormComp = async ({ params: { id } }: Props) => {
+  const isEditing = id === "new" ? false : true;
+  const ticket = await getTicketById(id);
+  // console.log("ticket:", ticket);
+
+  return <TicketForm isEditing={isEditing} ticket={ticket} />;
 };
 
 export default TicketFormComp;

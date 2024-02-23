@@ -8,7 +8,6 @@ type Props = {
 
 const StatusDisplay = ({ status }: Props) => {
   const color = getColor(status);
-  console.log("color:", color);
   return (
     <span
       className={`inline-block  rounded-full px-2 py-1 text-xs font-semibold ${color} text-gray-700`}

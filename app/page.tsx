@@ -3,12 +3,10 @@ import { getTickets } from "./utils/helper";
 
 export default async function Dashboard() {
   const tickets = await getTickets();
-  console.log("tickets:", tickets);
 
   const uniqueCategories = [
     ...new Set(tickets?.map(({ category }) => category)),
   ];
-  console.log("uniqueCategories:", uniqueCategories);
 
   return (
     <div className="p-5">

@@ -12,4 +12,5 @@ export interface ITicket {
   progress: number;
   status: TicketStatus;
   category: Category;
+  createdAt: Date;
 }

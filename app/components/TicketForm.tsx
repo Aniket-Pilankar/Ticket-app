@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import {
   categoriesOptions,
   ticketingStatusOptions,
@@ -9,7 +9,8 @@ import { Category, TicketStatus } from "../TicketPage/types";
 import { useRouter } from "next/navigation";
 import { ITicket } from "../types/types";
 
-interface InitialState extends Omit<ITicket, "_id" | "status" | "category"> {
+interface InitialState
+  extends Omit<ITicket, "_id" | "status" | "category" | "createdAt"> {
   status: TicketStatus | "";
   category: Category | "";
 }
@@ -23,7 +24,12 @@ const initialState: InitialState = {
   category: "",
 };
 
-const TicketForm = () => {
+interface Props {
+  isEditing: boolean;
+  ticket: ITicket | undefined;
+}
+
+const TicketForm = ({ isEditing, ticket }: Props) => {
   const router = useRouter();
   const [formData, setFormData] = useState(initialState);
 
@@ -31,7 +37,6 @@ const TicketForm = () => {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    console.log("value:", value);
 
     setFormData((prev) => ({
       ...prev,
@@ -43,22 +48,60 @@ const TicketForm = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("/api/Tickets", {
-        method: "POST",
-        body: JSON.stringify({ formData }),
-        headers: {
-          "content-type": "application/json",
-        },
-      });
+      if (isEditing) {
+        if (!ticket) return;
+        const res = await fetch(`/api/Tickets/${ticket._id}`, {
+          method: "PUT",
+          body: JSON.stringify({ formData }),
+          headers: {
+            "content-type": "application/json",
+          },
+        });
 
-      if (!res.ok) {
-        throw new Error("Failed to create ticket");
+        if (!res.ok) {
+          throw new Error("Failed to update ticket");
+        }
+      } else {
+        const res = await fetch("/api/Tickets", {
+          method: "POST",
+          body: JSON.stringify({ formData }),
+          headers: {
+            "content-type": "application/json",
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to create ticket");
+        }
       }
+      router.refresh();
       router.push("/");
     } catch (e) {
-      console.log("e:", e);
+      console.error("e:", e);
     }
   };
+
+  useEffect(
+    function initPage() {
+      console.log("isEditing:", isEditing);
+      console.log("ticket:", ticket);
+      if (!isEditing) return;
+      if (!ticket) return;
+      setFormData({
+        title: ticket.title,
+        description: ticket.description,
+        priority: ticket.priority,
+        progress: ticket.progress,
+        status: ticket.status,
+        category: ticket.category,
+      });
+    },
+    [ticket]
+  );
+
+  // useEffect(() => {
+  //   console.log("ticket:", ticket);
+  // }, [ticket]);
 
   return (
     <div className="flex justify-center">
