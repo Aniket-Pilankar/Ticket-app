@@ -1,8 +1,33 @@
 import TicketCard from "./components/TicketCard";
-import { getTickets } from "./utils/helper";
+import { ITickets } from "./types/types";
+
+const getTickets = async () => {
+  try {
+    const res = await fetch("http://localhost:3000/api/Tickets", {
+      // const res = await fetch("/api/Tickets", {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch topics");
+    }
+
+    // throw new Error("Errorrrr");
+    const data: ITickets = await res.json();
+    const tickets = data.tickets;
+    return tickets;
+  } catch (error) {
+    console.log("error: getTickets", error);
+  }
+};
 
 export default async function Dashboard() {
   const tickets = await getTickets();
+  console.log("tickets:", tickets);
+
+  if (!tickets) {
+    return <p>No tickets.</p>;
+  }
 
   const uniqueCategories = [
     ...new Set(tickets?.map(({ category }) => category)),
@@ -19,7 +44,7 @@ export default async function Dashboard() {
                 {tickets
                   .filter((ticket) => ticket.category === uniqueCategory)
                   .map((ticket) => (
-                    <TicketCard key={ticket._id} {...ticket} />
+                    <TicketCard key={ticket._id} ticket={ticket} />
                   ))}
               </div>
             </div>

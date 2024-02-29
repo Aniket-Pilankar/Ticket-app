@@ -1,32 +1,21 @@
-import { ITickets } from "../types/types";
+import { TicketStatus } from "../types/types";
 
-export const getTickets = async () => {
-  const res = await fetch("http://localhost:3000/api/Tickets", {
-    cache: "no-store",
-  });
+export const getColor = (status: TicketStatus) => {
+  let color;
+  switch (status) {
+    case TicketStatus.DONE:
+      color = "bg-green-200";
+      return color;
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch topics");
+    case TicketStatus.STARTED:
+      color = "bg-yellow-200";
+      return color;
+
+    case TicketStatus.NOT_STARTED:
+      color = "bg-red-200";
+      return color;
+    default:
+      color = "bg-slate-700";
   }
-
-  // throw new Error("Errorrrr");
-  const data: ITickets = await res.json();
-  const tickets = data.tickets;
-  return tickets;
+  return color;
 };
-
-export function formatTimestamp(timestamp: Date) {
-  const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  };
-
-  const date = new Date(timestamp);
-  const formattedDate = date.toLocaleString("en-US", options);
-
-  return formattedDate;
-}

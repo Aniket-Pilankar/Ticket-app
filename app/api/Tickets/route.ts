@@ -1,6 +1,5 @@
-import Ticket from "@/app/_modals/Ticket";
+import Ticket from "@/app/_models/Tickets";
 import { NextResponse } from "next/server";
-import { ITicketParams } from "./types";
 
 export async function GET() {
   try {

@@ -1,4 +1,4 @@
-import { TicketStatus } from "../TicketPage/types";
+import { TicketStatus } from "../types/types";
 
 enum Categories {
   HARDWARE_PROBLEM = "Hardware Problem",

@@ -5,9 +5,8 @@ import {
   categoriesOptions,
   ticketingStatusOptions,
 } from "../_constants/constants";
-import { Category, TicketStatus } from "../TicketPage/types";
 import { useRouter } from "next/navigation";
-import { ITicket } from "../types/types";
+import { Category, ITicket, TicketStatus } from "../types/types";
 
 interface InitialState
   extends Omit<ITicket, "_id" | "status" | "category" | "createdAt"> {

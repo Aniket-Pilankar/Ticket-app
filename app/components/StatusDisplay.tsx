@@ -1,6 +1,6 @@
 import React from "react";
-import { TicketStatus } from "../TicketPage/types";
-import { getColor } from "../TicketPage/helper";
+import { TicketStatus } from "../types/types";
+import { getColor } from "../utils/helper";
 
 type Props = {
   status: TicketStatus;
