@@ -3,8 +3,7 @@ import { ITickets } from "./types/types";
 
 const getTickets = async () => {
   try {
-    const res = await fetch("/api/Tickets", {
-      // const res = await fetch("/api/Tickets", {
+    const res = await fetch(`${process.env.API_BASE_URL}/api/Tickets`, {
       cache: "no-store",
     });
 
