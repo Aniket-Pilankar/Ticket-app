@@ -3,7 +3,7 @@ import { TicketStatus } from "../types/types";
 enum Categories {
   HARDWARE_PROBLEM = "Hardware Problem",
   SOFTWARE_PROBLEM = "Software Problem",
-  APPLICATION_DEVEOPMENT = "Application Deveopment",
+  APPLICATION_DEVEOPMENT = "Application Development",
   PROJECT = "Project",
 }
 
